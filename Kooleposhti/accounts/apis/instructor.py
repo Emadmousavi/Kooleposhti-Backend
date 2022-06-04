@@ -243,10 +243,10 @@ class InstructorViewSet(views.APIView):
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
 
-        try:
-            self.delete_user(instance)
-        except Exception as e:
-            return Response({"SkyRoom": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        # try:
+        #     self.delete_user(instance)
+        # except Exception as e:
+        #     return Response({"SkyRoom": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
         self.perform_destroy(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -256,8 +256,9 @@ class InstructorViewSet(views.APIView):
 
     def delete_user(self, instance):
         # delete skyroom user
-        api = SkyroomAPI(SKYROOM_KEY)
-        api.deleteUser({"user_id": instance.user.userskyroom.skyroom_id})
+        # api = SkyroomAPI(SKYROOM_KEY)
+        # api.deleteUser({"user_id": instance.user.userskyroom.skyroom_id})
+        pass
 
     """
     Update a model instance.
@@ -270,10 +271,10 @@ class InstructorViewSet(views.APIView):
             instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
 
-        try:
-            self.update_user(request, serializer)
-        except Exception as e:
-            return Response({"SkyRoom": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        # try:
+        #     self.update_user(request, serializer)
+        # except Exception as e:
+        #     return Response({"SkyRoom": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
         self.perform_update(serializer)
         if getattr(instance, '_prefetched_objects_cache', None):
@@ -941,10 +942,10 @@ class InstructorViewSet(views.APIView):
             serializer = self.get_serializer(instructor, data=request.data)
             serializer.is_valid(raise_exception=True)
 
-            try:
-                self.update_user(request, serializer, password)
-            except Exception as e:
-                return Response({"SkyRoom": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            # try:
+            #     self.update_user(request, serializer, password)
+            # except Exception as e:
+            #     return Response({"SkyRoom": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
             self.perform_update(serializer)
             return Response(serializer.data)

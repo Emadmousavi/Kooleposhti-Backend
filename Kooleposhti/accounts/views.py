@@ -171,13 +171,13 @@ def sign_up_user(request: HttpRequest, *args, **kwargs):
         serializer = UserCreateSerializer(data=serializer_dict)
         serializer.is_valid(raise_exception=True)
 
-        try:
-            skyroom_id = skyroom_signup(request.data)
-        except Exception as e: 
-            return Response({"SkyRoom": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        # try:
+        #     skyroom_id = skyroom_signup(request.data)
+        # except Exception as e: 
+        #     return Response({"SkyRoom": str(e)}, status=status.HTTP_400_BAD_REQUEST)
             
-        user = serializer.save()
-        userskyroom = UserSkyRoom.objects.create(skyroom_id=skyroom_id, user=user)
+        # user = serializer.save()
+        # userskyroom = UserSkyRoom.objects.create(skyroom_id=skyroom_id, user=user)
 
         if is_instructor:
             Instructor.objects.create(user=user)
@@ -209,7 +209,7 @@ class MyTokenObtainPairView(TokenViewBase):
     Takes a set of user credentials and returns an access and refresh JSON web
     token pair to prove the authentication of those credentials.
     """
-    serializer_class = serializers.MyTokenObtainPairSerializer
+    serializer_class = serializers.F
 
 
 class UserResetPassword(GenericViewSet):

@@ -147,12 +147,12 @@ class CourseViewSet(ModelViewSet):
 			serializer.is_valid(raise_exception=True)
 			course = serializer.save()
 
-			try:
-				self.update_room(course)
-			except Exception as e:
-				course = course_old
-				course.save()
-				return Response({"SkyRoom": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+			# try:
+			# 	self.update_room(course)
+			# except Exception as e:
+			# 	course = course_old
+			# 	course.save()
+			# 	return Response({"SkyRoom": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 			if getattr(instance, '_prefetched_objects_cache', None):
 				instance._prefetched_objects_cache = {}
@@ -220,10 +220,10 @@ class CourseViewSet(ModelViewSet):
 		instance = self.get_object()
 		if instance.is_owner(request.user.instructor):
 
-			try:
-				self.delete_room(instance)
-			except Exception as e:
-				return Response({"SkyRoom": {"SkyRoom": str(e)}}, status=status.HTTP_400_BAD_REQUEST)
+			# try:
+			# 	self.delete_room(instance)
+			# except Exception as e:
+			# 	return Response({"SkyRoom": {"SkyRoom": str(e)}}, status=status.HTTP_400_BAD_REQUEST)
 				
 			self.perform_destroy(instance)
 			return Response(status=status.HTTP_204_NO_CONTENT)
@@ -278,10 +278,10 @@ class CourseViewSet(ModelViewSet):
 			return Response('Insufficient funds.',
 							status=status.HTTP_400_BAD_REQUEST)
 		
-		try:
-			self.perform_add_student(course, student)
-		except Exception as e:
-			return Response({"SkyRoom": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+		# try:
+		# 	self.perform_add_student(course, student)
+		# except Exception as e:
+		# 	return Response({"SkyRoom": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 		
 		student_wallet.withdraw(course_price)
 		course.instructor.user.wallet.deposit(course_price)
@@ -319,10 +319,10 @@ class CourseViewSet(ModelViewSet):
 		if not course.is_enrolled(student):
 			return Response('Not enrolled yet.', status=status.HTTP_400_BAD_REQUEST)
 
-		try:
-			self.perform_remove_student(course, student)
-		except Exception as e:
-			return Response({"SkyRoom": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+		# try:
+		# 	self.perform_remove_student(course, student)
+		# except Exception as e:
+		# 	return Response({"SkyRoom": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 		course.students.remove(request.user.student)
 		course.update_capacity()
@@ -344,11 +344,11 @@ class CourseViewSet(ModelViewSet):
 			if instructor.user.wallet.balance < money:
 				return Response('Insufficient funds.',
 											status=status.HTTP_400_BAD_REQUEST)
-			try:
-				self.perform_remove_student(course, student)
-			except Exception as e:
-				return Response({"SkyRoom": str(e)}, 
-									status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+			# try:
+			# 	self.perform_remove_student(course, student)
+			# except Exception as e:
+			# 	return Response({"SkyRoom": str(e)}, 
+			# 						status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 			course.students.remove(student)
 			course.update_capacity()

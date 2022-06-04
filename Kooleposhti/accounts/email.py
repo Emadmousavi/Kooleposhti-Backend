@@ -40,7 +40,7 @@ class ActivationEmail(APIView):
 
             email = EmailMessage('تایید حساب کاربری در کوله پشتی',
                                  template,
-                                 'Kooleposhti',
+                                 "Kooleposhti",
                                  [user_email]
                                  )
 
